@@ -1,6 +1,6 @@
 name: Python package
 
-on:
+on:                            #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행
   push:
     branches: [ "master" ]
   pull_request:
@@ -8,18 +8,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.8"]
+    runs-on: ubuntu-latest     #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행          
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.8
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.8
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
