@@ -36,8 +36,8 @@ jobs:
         #src: 'test.py'
         #bucket: 'example_action'
         #destination: 'destination/path/file'
-      path: 'test.py'
-      destination: 'example_action'
+        path: 'test.py'
+        destination: 'example_action'
 
 
         #https://storage.googleapis.com/example_action/test.py
