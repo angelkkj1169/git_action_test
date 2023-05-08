@@ -30,9 +30,9 @@ jobs:
 
     - name: Upload to GCS
       if: ${{ job.status == 'success' }}
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/upload-cloud-storage@v3
       with:
-        serviceAccountKey: ${{ secrets.GCP_SA_KEY }}
+        serviceAccountJson: ${{ secrets.GCP_SA_KEY }}
         src: 'test.py'
         bucket: 'example_action'
         #destination: 'destination/path/file'
