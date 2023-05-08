@@ -1,6 +1,6 @@
 name: Python package
 
-on:                            #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행
+on:                              #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행
   push:
     branches: [ "master" ]
   pull_request:
@@ -8,20 +8,21 @@ on:                            #push나 pull_request가 일어날 시 브렌치�
 
 jobs:
   build:
-    runs-on: ubuntu-latest     #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행          
+    runs-on: ubuntu-latest        #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행          
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3   #Git 저장소의 코드를 action 실행 환경에 복제
 
-    - name: Set up Python 3.8
+    - name: Set up Python 3.8     #action 실행 환경에 Python 3.8 설치
       uses: actions/setup-python@v3
       with:
         python-version: 3.8
-        
-    - name: Install dependencies
+
+    - name: Install dependencies  #pip - Python 패키지를 설치, 관리하는 패키지 관리자
+                                  #requirements.txt 파일은 가상환경(Virtual Environment)에 설치된 패키지들과 그 버전 정보를 저장하는 파일
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r requirements.txt     
 
     - name: Test with pytest
       run: |
@@ -30,5 +31,4 @@ jobs:
     - name: Build
       if: ${{ job.status == 'success' }}
       run: |
-        echo "Build successful"
-        # Add your build commands here
+        echo "빌드 성공"

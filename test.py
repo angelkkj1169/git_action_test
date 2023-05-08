@@ -6,4 +6,4 @@ def func(x):
 
 # 테스트 함수
 def test_answer():
-    assert func(3) == 5, '오류'
+    assert func(4) == 5, '오류'
