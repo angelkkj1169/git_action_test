@@ -28,7 +28,15 @@ jobs:
       run: |
         pytest test.py
 
-    - name: Build
+    - name: Upload to GCS
       if: ${{ job.status == 'success' }}
-      run: |
-        echo "빌드 성공"
+      uses: google-github-actions/upload-cloud-storage@master
+      with:
+        serviceAccountJson: ${{ secrets.GCP_SA_KEY }}
+        src: 'test.py'
+        bucket: 'example_action'
+        #destination: 'destination/path/file'
+
+
+        #https://storage.googleapis.com/example_action/test.py
+
