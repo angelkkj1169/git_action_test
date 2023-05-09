@@ -41,5 +41,4 @@ jobs:
         path: 'test.py'
         destination: 'example_action'
 
-        #https://storage.googleapis.com/example_action/test.py
 
