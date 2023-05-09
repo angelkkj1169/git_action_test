@@ -9,7 +9,6 @@ on:                              #push나 pull_request가 일어날 시 브렌�
 jobs:
   build:
     runs-on: ubuntu-latest        #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행          
-
     steps:
     - uses: actions/checkout@v3   #Git 저장소의 코드를 action 실행 환경에 복제
 
@@ -21,20 +20,20 @@ jobs:
     - name: Install dependencies  #pip - Python 패키지를 설치, 관리하는 패키지 관리자
                                   #requirements.txt 파일은 가상환경(Virtual Environment)에 설치된 패키지들과 그 버전 정보를 저장하는 파일
       run: |
-        python -m pip install --upgrade pip
+        python -m pip install --upgrade pip      
         pip install -r requirements.txt     
 
-    - name: Test with pytest
+    - name: Test with pytest      #pytest로 test.py 파일의 테스트 실행
       run: |
         pytest test.py
 
-    - id: 'auth'
+    - id: 'auth'                  #GCP 인증
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-    - name: Upload to GCS
+    - name: Upload to GCS        #GCP에 파일 업로드
       if: ${{ job.status == 'success' }}
       uses: 'google-github-actions/upload-cloud-storage@v1'
       with:
