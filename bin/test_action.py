@@ -5,4 +5,4 @@ def func(x):
 def test_answer():
     assert func(4) == 5, '오류입니다.'
         
-print("action test")
+print("action test!")
