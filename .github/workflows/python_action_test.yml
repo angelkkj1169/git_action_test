@@ -39,10 +39,9 @@ jobs:
         credentials_json: '${{ secrets.GCP_SA_KEY }}' #GIT의 Repository secrets에 GCS 서비스 계정 관련 json을 저장
 
     - name: Upload to GCS                             #GCS에 파일 업로드
-      if: ${{ job.status == 'success' }}
       uses: 'google-github-actions/upload-cloud-storage@v1'
       with:
-        path: 'test.py'
-        destination: 'example_action'
+        path: 'test.py'                               #업로드할 파일의 경로
+        destination: 'example_action'                 #GCS에 업로드할 파일의 경로
 
 
