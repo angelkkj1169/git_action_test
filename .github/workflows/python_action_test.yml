@@ -33,8 +33,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3  
 
-    - id: 'auth'                            #GCS 인증
-      name: 'Authenticate to Google Cloud'
+    - name: 'Authenticate to Google Cloud'  #GCS 인증
       uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GCP_SA_KEY }}' #GIT의 Repository secrets에 GCS 서비스 계정 관련 json을 저장
