@@ -28,7 +28,7 @@ jobs:
 
   deploy:
     name: GCS Upload
-    needs: build
+    needs: build                            #build job이 성공시에만 수행
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3  
