@@ -1,6 +1,6 @@
-name: Python package
+name: Build and GCS Upload                           #Workflow 이름
 
-on:                                       #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행
+on:                                                  #push가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행
   push:
     branches: [ "master" ]
   
@@ -8,37 +8,37 @@ jobs:
 
   build:
     name: Build 
-    runs-on: ubuntu-latest                 #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행          
+    runs-on: ubuntu-latest                            #push나 pull_request가 일어날 시 브렌치가 "master"인 경우 아래 작업을 수행          
     steps:
-    - uses: actions/checkout@v3            #Git 저장소의 코드를 action 실행 환경에 복제
+    - uses: actions/checkout@v3                       #Git 저장소의 코드를 action 실행 환경에 복제
 
-    - name: Set up Python 3.8              #action 실행 환경에 Python 3.8 설치
+    - name: Set up Python 3.8                         #action 실행 환경에 Python 3.8 설치
       uses: actions/setup-python@v3
       with:
         python-version: 3.8
 
-    - name: Install dependencies            #pip - Python 패키지를 설치, 관리하는 패키지 관리자
-      run: |                                #requirements.txt 파일은 가상환경(Virtual Environment)에 설치된 패키지들과 그 버전 정보를 저장하는 파일
+    - name: Install dependencies                      #pip - Python 패키지를 설치, 관리하는 패키지 관리자
+      run: |                                          #requirements.txt 파일은 가상환경(Virtual Environment)에 설치된 패키지들과 그 버전 정보를 저장하는 파일
         python -m pip install --upgrade pip      
         pip install -r requirements.txt     
 
-    - name: Test with pytest                #pytest로 test.py 파일의 테스트 실행
+    - name: Test with pytest                          #pytest로 test.py 파일의 테스트 실행
       run: |
         pytest test.py
 
   deploy:
     name: GCS Upload
-    needs: build                            #build job이 성공시에만 수행
+    needs: build                                      #build job이 성공시에만 수행
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3  
 
-    - name: 'Authenticate to Google Cloud'  #GCS 인증
+    - name: 'Authenticate to Google Cloud'            #GCS 인증
       uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GCP_SA_KEY }}' #GIT의 Repository secrets에 GCS 서비스 계정 관련 json을 저장
 
-    - name: Upload to GCS                  #GCS에 파일 업로드
+    - name: Upload to GCS                             #GCS에 파일 업로드
       if: ${{ job.status == 'success' }}
       uses: 'google-github-actions/upload-cloud-storage@v1'
       with:
